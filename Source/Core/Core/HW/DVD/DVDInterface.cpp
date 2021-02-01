@@ -1401,7 +1401,8 @@ static void ScheduleReads(u64 offset, u32 length, const DiscIO::Partition& parti
       if (dvd_offset < buffer_start)
       {
         // Kill the buffer, but maintain the head position for seeks.
-        buffer_start = buffer_end = 0;
+        // Actually no, Pitfall hates that.
+        buffer_start = std::numeric_limits<u64>::min();
       }
     }
   }
