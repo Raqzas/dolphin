@@ -8,6 +8,12 @@ of the GNU General Public License, version 2 or later (GPLv2+).
 
 Please read the [FAQ](https://dolphin-emu.org/docs/faq/) before using Dolphin.
 
+## Pitfall: The Lost Expedition / The Big Adventure speedrunning
+
+This is a custom dolphin version that purposefully *breaks* Dolphin's load times to be on par with Dolphin 4.0-9017 or lower. Viable for Pitfall: The Lost Expedition / The Big Adventure speedrunning. But not viable to speedrun for any other game!
+
+Pitfall's loading times have always been abnormally long in Dolphin, however there was a bug that hid this issue and made the load look more reasonable. In 4.0-9019, disc timings were corrected, which made Pitfall load extremely slowly. See: https://bugs.dolphin-emu.org/issues/12279
+
 ## System Requirements
 
 ### Desktop
