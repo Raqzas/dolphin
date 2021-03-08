@@ -98,7 +98,7 @@ struct DTMHeader
   bool bDualCore;
   bool bProgressive;
   bool bDSPHLE;
-  bool bFastDiscSpeed;
+  bool bFastDiscSpeed; // Unused in this custom speedrunning version
   u8 CPUCore;  // Uses the values of PowerPC::CPUCore
   bool bEFBAccessEnable;
   bool bEFBCopyEnable;
