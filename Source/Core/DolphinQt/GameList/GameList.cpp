@@ -2,6 +2,18 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#ifdef _WIN32
+#include <QCoreApplication>
+#include <shlobj.h>
+#include <wil/com.h>
+
+// This file uses some identifiers which are defined as macros in Windows headers.
+// Include and undefine the macros first thing we do to solve build errors.
+#ifdef DeleteFile
+#undef DeleteFile
+#endif
+#endif
+
 #include "DolphinQt/GameList/GameList.h"
 
 #include <algorithm>
@@ -52,20 +64,6 @@
 #include "DolphinQt/WiiUpdate.h"
 
 #include "UICommon/GameFile.h"
-
-#ifdef _WIN32
-#include <QCoreApplication>
-#include <shlobj.h>
-#include <wil/com.h>
-
-// This file uses some identifiers which are defined as macros in Windows headers.
-// Undefine them for the intellisense parser to solve some red squiggles.
-#ifdef __INTELLISENSE__
-#ifdef DeleteFile
-#undef DeleteFile
-#endif
-#endif
-#endif
 
 GameList::GameList(QWidget* parent) : QStackedWidget(parent), m_model(this)
 {
@@ -318,14 +316,13 @@ void GameList::ShowContextMenu(const QPoint&)
   {
     const auto game = GetSelectedGame();
     DiscIO::Platform platform = game->GetPlatform();
-
+    menu->addAction(tr("&Properties"), this, &GameList::OpenProperties);
     if (platform != DiscIO::Platform::ELFOrDOL)
     {
-      menu->addAction(tr("&Properties"), this, &GameList::OpenProperties);
       menu->addAction(tr("&Wiki"), this, &GameList::OpenWiki);
-
-      menu->addSeparator();
     }
+
+    menu->addSeparator();
 
     if (DiscIO::IsDisc(platform))
     {
@@ -503,7 +500,8 @@ void GameList::OpenWiki()
     return;
 
   QString game_id = QString::fromStdString(game->GetGameID());
-  QString url = QStringLiteral("https://wiki.dolphin-emu.org/index.php?title=").append(game_id);
+  QString url =
+      QStringLiteral("https://wiki.dolphin-emu.org/dolphin-redirect.php?gameid=").append(game_id);
   QDesktopServices::openUrl(QUrl(url));
 }
 
