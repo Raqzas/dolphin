@@ -54,7 +54,6 @@ struct NetSettings
   int m_SyncGpuMinDistance;
   float m_SyncGpuOverclock;
   bool m_JITFollowBranch;
-  bool m_FastDiscSpeed;
   bool m_MMU;
   bool m_Fastmem;
   bool m_SkipIPL;

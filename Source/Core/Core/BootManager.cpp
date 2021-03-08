@@ -86,7 +86,6 @@ private:
   int iSyncGpuMaxDistance;
   int iSyncGpuMinDistance;
   float fSyncGpuOverclock;
-  bool bFastDiscSpeed;
   bool bDSPHLE;
   bool bHLE_BS2;
   int iSelectedLanguage;
@@ -119,7 +118,6 @@ void ConfigCache::SaveConfig(const SConfig& config)
   iSyncGpuMaxDistance = config.iSyncGpuMaxDistance;
   iSyncGpuMinDistance = config.iSyncGpuMinDistance;
   fSyncGpuOverclock = config.fSyncGpuOverclock;
-  bFastDiscSpeed = config.bFastDiscSpeed;
   bDSPHLE = config.bDSPHLE;
   bHLE_BS2 = config.bHLE_BS2;
   iSelectedLanguage = config.SelectedLanguage;
@@ -165,7 +163,6 @@ void ConfigCache::RestoreConfig(SConfig* config)
   config->iSyncGpuMaxDistance = iSyncGpuMaxDistance;
   config->iSyncGpuMinDistance = iSyncGpuMinDistance;
   config->fSyncGpuOverclock = fSyncGpuOverclock;
-  config->bFastDiscSpeed = bFastDiscSpeed;
   config->bDSPHLE = bDSPHLE;
   config->bHLE_BS2 = bHLE_BS2;
   config->SelectedLanguage = iSelectedLanguage;
@@ -263,7 +260,6 @@ bool BootCore(std::unique_ptr<BootParameters> boot, const WindowSystemInfo& wsi)
     core_section->Get("MMU", &StartUp.bMMU, StartUp.bMMU);
     core_section->Get("LowDCBZHack", &StartUp.bLowDCBZHack, StartUp.bLowDCBZHack);
     core_section->Get("SyncGPU", &StartUp.bSyncGPU, StartUp.bSyncGPU);
-    core_section->Get("FastDiscSpeed", &StartUp.bFastDiscSpeed, StartUp.bFastDiscSpeed);
     core_section->Get("DSPHLE", &StartUp.bDSPHLE, StartUp.bDSPHLE);
     core_section->Get("CPUCore", &StartUp.cpu_core, StartUp.cpu_core);
     core_section->Get("HLE_BS2", &StartUp.bHLE_BS2, StartUp.bHLE_BS2);
@@ -327,7 +323,6 @@ bool BootCore(std::unique_ptr<BootParameters> boot, const WindowSystemInfo& wsi)
     StartUp.bCPUThread = Config::Get(Config::MAIN_CPU_THREAD);
     StartUp.bJITFollowBranch = Config::Get(Config::MAIN_JIT_FOLLOW_BRANCH);
     StartUp.bDSPHLE = Config::Get(Config::MAIN_DSP_HLE);
-    StartUp.bFastDiscSpeed = Config::Get(Config::MAIN_FAST_DISC_SPEED);
     StartUp.cpu_core = Config::Get(Config::MAIN_CPU_CORE);
     StartUp.bSyncGPU = Config::Get(Config::MAIN_SYNC_GPU);
     if (!StartUp.bWii)
@@ -377,7 +372,6 @@ bool BootCore(std::unique_ptr<BootParameters> boot, const WindowSystemInfo& wsi)
     StartUp.iSyncGpuMinDistance = netplay_settings.m_SyncGpuMinDistance;
     StartUp.fSyncGpuOverclock = netplay_settings.m_SyncGpuOverclock;
     StartUp.bJITFollowBranch = netplay_settings.m_JITFollowBranch;
-    StartUp.bFastDiscSpeed = netplay_settings.m_FastDiscSpeed;
     StartUp.bMMU = netplay_settings.m_MMU;
     StartUp.bFastmem = netplay_settings.m_Fastmem;
     StartUp.bHLE_BS2 = netplay_settings.m_SkipIPL;

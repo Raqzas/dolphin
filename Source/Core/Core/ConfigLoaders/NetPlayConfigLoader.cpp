@@ -61,7 +61,6 @@ public:
     layer->Set(Config::MAIN_SYNC_GPU_MIN_DISTANCE, m_settings.m_SyncGpuMinDistance);
     layer->Set(Config::MAIN_SYNC_GPU_OVERCLOCK, m_settings.m_SyncGpuOverclock);
     layer->Set(Config::MAIN_JIT_FOLLOW_BRANCH, m_settings.m_JITFollowBranch);
-    layer->Set(Config::MAIN_FAST_DISC_SPEED, m_settings.m_FastDiscSpeed);
     layer->Set(Config::MAIN_MMU, m_settings.m_MMU);
     layer->Set(Config::MAIN_FASTMEM, m_settings.m_Fastmem);
     layer->Set(Config::MAIN_SKIP_IPL, m_settings.m_SkipIPL);

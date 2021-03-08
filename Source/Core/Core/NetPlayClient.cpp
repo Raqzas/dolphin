@@ -688,7 +688,6 @@ unsigned int NetPlayClient::OnData(sf::Packet& packet)
       packet >> m_net_settings.m_SyncGpuMinDistance;
       packet >> m_net_settings.m_SyncGpuOverclock;
       packet >> m_net_settings.m_JITFollowBranch;
-      packet >> m_net_settings.m_FastDiscSpeed;
       packet >> m_net_settings.m_MMU;
       packet >> m_net_settings.m_Fastmem;
       packet >> m_net_settings.m_SkipIPL;

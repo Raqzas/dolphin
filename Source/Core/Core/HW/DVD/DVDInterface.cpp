@@ -1356,53 +1356,43 @@ static void ScheduleReads(u64 offset, u32 length, const DiscIO::Partition& parti
   u64 dvd_offset = DVDThread::PartitionOffsetToRawOffset(offset, partition);
   dvd_offset = Common::AlignDown(dvd_offset, DVD_ECC_BLOCK_SIZE);
 
-  if (SConfig::GetInstance().bFastDiscSpeed)
+  if (s_read_buffer_start_time == s_read_buffer_end_time)
   {
-    // The SUDTR setting makes us act as if all reads are buffered
-    buffer_start = std::numeric_limits<u64>::min();
-    buffer_end = std::numeric_limits<u64>::max();
-    head_position = 0;
+    // No buffer
+    buffer_start = buffer_end = head_position = 0;
   }
   else
   {
-    if (s_read_buffer_start_time == s_read_buffer_end_time)
+    buffer_start = s_read_buffer_end_offset > STREAMING_BUFFER_SIZE ?
+                        s_read_buffer_end_offset - STREAMING_BUFFER_SIZE :
+                        0;
+
+    DEBUG_LOG_FMT(DVDINTERFACE, "Buffer: now={:#x} start time={:#x} end time={:#x}", current_time,
+                  s_read_buffer_start_time, s_read_buffer_end_time);
+
+    if (current_time >= s_read_buffer_end_time)
     {
-      // No buffer
-      buffer_start = buffer_end = head_position = 0;
+      // Buffer is fully read
+      buffer_end = s_read_buffer_end_offset;
     }
     else
     {
-      buffer_start = s_read_buffer_end_offset > STREAMING_BUFFER_SIZE ?
-                         s_read_buffer_end_offset - STREAMING_BUFFER_SIZE :
-                         0;
+      // The amount of data the buffer contains *right now*, rounded to a DVD ECC block.
+      buffer_end = s_read_buffer_start_offset +
+                    Common::AlignDown((current_time - s_read_buffer_start_time) *
+                                          (s_read_buffer_end_offset - s_read_buffer_start_offset) /
+                                          (s_read_buffer_end_time - s_read_buffer_start_time),
+                                      DVD_ECC_BLOCK_SIZE);
+    }
+    head_position = buffer_end;
 
-      DEBUG_LOG_FMT(DVDINTERFACE, "Buffer: now={:#x} start time={:#x} end time={:#x}", current_time,
-                    s_read_buffer_start_time, s_read_buffer_end_time);
-
-      if (current_time >= s_read_buffer_end_time)
-      {
-        // Buffer is fully read
-        buffer_end = s_read_buffer_end_offset;
-      }
-      else
-      {
-        // The amount of data the buffer contains *right now*, rounded to a DVD ECC block.
-        buffer_end = s_read_buffer_start_offset +
-                     Common::AlignDown((current_time - s_read_buffer_start_time) *
-                                           (s_read_buffer_end_offset - s_read_buffer_start_offset) /
-                                           (s_read_buffer_end_time - s_read_buffer_start_time),
-                                       DVD_ECC_BLOCK_SIZE);
-      }
-      head_position = buffer_end;
-
-      // Reading before the buffer is not only unbuffered,
-      // but also destroys the old buffer for future reads.
-      if (dvd_offset < buffer_start)
-      {
-        // Kill the buffer, but maintain the head position for seeks.
-        // Actually no, Pitfall hates that.
-        buffer_start = std::numeric_limits<u64>::min();
-      }
+    // Reading before the buffer is not only unbuffered,
+    // but also destroys the old buffer for future reads.
+    if (dvd_offset < buffer_start)
+    {
+      // Kill the buffer, but maintain the head position for seeks.
+      // Actually no, Pitfall hates that.
+      buffer_start = std::numeric_limits<u64>::min();
     }
   }
 

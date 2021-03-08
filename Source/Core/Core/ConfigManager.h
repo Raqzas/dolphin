@@ -133,7 +133,6 @@ struct SConfig
   bool bMMU = false;
   bool bLowDCBZHack = false;
   int iBBDumpPort = 0;
-  bool bFastDiscSpeed = false;
 
   bool bSyncGPU = false;
   int iSyncGpuMaxDistance;
