@@ -1,3 +1,5 @@
+# DISCLAIMER: The "fix" is not accurate enough and won't be accepted on the Pitfall: TLE speedrunning leaderboard!!!
+
 # Dolphin - A GameCube and Wii Emulator
 
 [Homepage](https://dolphin-emu.org/) | [Project Site](https://github.com/dolphin-emu/dolphin) | [Buildbot](https://dolphin.ci) | [Forums](https://forums.dolphin-emu.org/) | [Wiki](https://wiki.dolphin-emu.org/) | [Issue Tracker](https://bugs.dolphin-emu.org/projects/emulator/issues) | [Coding Style](https://github.com/dolphin-emu/dolphin/blob/master/Contributing.md) | [Transifex Page](https://www.transifex.com/projects/p/dolphin-emu/)
@@ -10,7 +12,7 @@ Please read the [FAQ](https://dolphin-emu.org/docs/faq/) before using Dolphin.
 
 ## Pitfall: The Lost Expedition / The Big Adventure speedrunning
 
-This is a custom dolphin version that purposefully *breaks* Dolphin's load times to be on par with Dolphin 4.0-9017 or lower. Viable for Pitfall: The Lost Expedition / The Big Adventure speedrunning. But not viable to speedrun for any other game!
+This is a custom dolphin version that purposefully *breaks* Dolphin's load times in an attempt to be on par with Dolphin 4.0-9017 or lower. NOT VIABLE FOR SPEEDRUNNING!!!
 
 Pitfall's loading times have always been abnormally long in Dolphin, however there was a bug that hid this issue and made the load look more reasonable. In 4.0-9019, disc timings were corrected, which made Pitfall load extremely slowly. See: https://bugs.dolphin-emu.org/issues/12279
 
